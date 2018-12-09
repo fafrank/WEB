@@ -1,0 +1,62 @@
+<html></html>
+    <head>
+        <title>AR</title>
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+        <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+        <script src="./lib/aframe-ar-1.6.0.js"></script>
+        <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
+        
+        <link rel="stylesheet" href="style/bootstrap.min.css">
+        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/alert.css">
+    </head>
+
+    <body style='margin : 0px; overflow: hidden;'>
+        
+        <a-scene id="scene" embedded arjs='trackingMethod: best; debugUIEnabled: false;' vr-mode-ui="enabled: false"
+            screenshot='width: 480; height: 640'>
+
+            <div id="alert-popover">
+                <div>
+                    <h4>AR聖誕樹<br>AR Christmas Tree</h4>
+                    <p>如無法開啟請複製連結到可支援的瀏覽器中開啟<br>If you are unable to open the page, please copy the link to supported browser,</p>
+                    <ul>
+                        <li>iOS請使用Safari開啟<br>For iOS users: Safari</li>
+                        <li>Android建議用Chrome開啟<br>For Android users: Chrome(Recommended)</li>
+                    </ul>
+                </div>
+    
+                <div style="text-align: center;">
+                    <button id="button-start" class="btn btn-info" onclick="hideAlertView(); playSound()">Start</button>
+                    <button id="button-copy-link" class="btn btn-info" onclick="copyLink()">Copy Link</button>
+                </div>
+    
+                <div>
+                    <input id="url-input" type="text" value="">
+                </div>
+            </div>
+
+            <a-assets>
+                <a-asset-item id="object" src="./models/christmas_tree/ChristmasTree.gltf" preload="auto"></a-asset-item>
+                <a-asset-item id="christmas-sound" src="./sound/christmas.mp3" response-type="arraybuffer" preload="auto"></a-asset-item>
+            </a-assets>
+
+            <a-entity id="christmas-sound-entity" sound="src: #christmas-sound; loop: true"></a-entity>
+
+            <a-marker id="marker" preset='custom' type='pattern' url='data/qrcode-marker.patt'>
+                <a-entity id="tree-model" gltf-model="#object" scale="0.2 0.2 0.2" position="0 0 0" animation-mixer></a-entity>
+            </a-marker>
+
+            <a-entity camera>
+                <a-cursor material="color: red; opacity: 0" cursor="fuse: false"></a-cursor>
+            </a-entity>
+
+        </a-scene>
+
+        <script src="js/ar-app.js"></script>
+    </body>
+
+</html>
